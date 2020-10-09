@@ -8,14 +8,14 @@ namespace Tests
     [TestFixture]
     public class Tests
     {
-        [TestCase(null, 2, "", false)]
-        [TestCase(new []{1}, 1, "", true)]
-        [TestCase(new []{1}, 2, "1", false)]
-        [TestCase(new []{1, 2}, 3, "1 2", false)]
-        [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4", true)]
-        [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4", true)]
-        [TestCase(new []{1, 2, 3, 4}, 4, "1 2 3", true)]
-        public void RemoveTest(int[] nodeValues, int valToRemove, string listAfterOperation, bool operationValue)
+        [TestCase(null, 2, "", false,null, null) ]
+        [TestCase(new []{1}, 1, "", true, null, null)]
+        [TestCase(new []{1}, 2, "1", false, 1, 1)]
+        [TestCase(new []{1, 2}, 3, "1 2", false, 1, 2)]
+        [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4", true, 2, 4)]
+        [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4", true, 1, 4)]
+        [TestCase(new []{1, 2, 3, 4}, 4, "1 2 3", true, 1, 3)]
+        public void RemoveTest(int[] nodeValues, int valToRemove, string listAfterOperation, bool operationValue, int? head, int? tail)
         {
             var testList = CreateLinkedList(nodeValues);
 
@@ -23,28 +23,44 @@ namespace Tests
             
             Assert.True(removeOperationResult == operationValue);
             Assert.True(testList.ToString().Equals(listAfterOperation));
+            Assert.True(CheckHeadAndTail(testList.head, head));
+            Assert.True(CheckHeadAndTail(testList.tail, tail));
         }
         
-        [TestCase(null, 2, "")]
-        [TestCase(new []{1}, 1, "")]
-        [TestCase(new []{1}, 2, "1")]
-        [TestCase(new []{1, 2}, 3, "1 2")]
-        [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4")]
-        [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4")]
-        [TestCase(new []{1, 2, 3, 4}, 4, "1 2 3")]
-        [TestCase(new []{1, 1}, 1, "")]
-        [TestCase(new []{1, 1, 2, 3, 4}, 1, "2 3 4")]
-        [TestCase(new []{1, 1, 2, 3, 4, 1}, 1, "2 3 4")]
-        [TestCase(new []{1, 1, 2, 1, 3, 4, 1}, 1, "2 3 4")]
-        [TestCase(new []{2, 3, 4}, 1, "2 3 4")]
-        [TestCase(new []{2, 3, 4}, 3, "2 4")]
-        public void RemoveAllest(int[] nodeValues, int valToRemove, string listAfterOperation)
+        [TestCase(null, 2, "", null, null)]
+        [TestCase(new []{1}, 1, "", null, null)]
+        [TestCase(new []{1}, 2, "1", 1, 1)]
+        [TestCase(new []{1, 2}, 3, "1 2", 1, 2)]
+        [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4", 2, 4)]
+        [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4", 1, 4)]
+        [TestCase(new []{1, 2, 3, 4}, 4, "1 2 3", 1, 3)]
+        [TestCase(new []{1, 1}, 1, "", null, null)]
+        [TestCase(new []{1, 1, 2, 3, 4}, 1, "2 3 4", 2, 4)]
+        [TestCase(new []{1, 1, 2, 3, 4, 1}, 1, "2 3 4", 2, 4)]
+        [TestCase(new []{1, 1, 2, 1, 3, 4, 1}, 1, "2 3 4", 2, 4)]
+        [TestCase(new []{2, 3, 4}, 1, "2 3 4", 2, 4)]
+        [TestCase(new []{2, 3, 4}, 3, "2 4", 2, 4)]
+        public void RemoveAllest(int[] nodeValues, int valToRemove, string listAfterOperation, int? head, int? tail)
         {
             var testList = CreateLinkedList(nodeValues);
 
             testList.RemoveAll(valToRemove);
             
             Assert.True(testList.ToString().Equals(listAfterOperation));
+            Assert.True(CheckHeadAndTail(testList.head, head));
+            Assert.True(CheckHeadAndTail(testList.tail, tail));
+        }
+
+        private bool CheckHeadAndTail(Node node, int? expectedVal)
+        {
+            if (expectedVal == null)
+            {
+                return node == null;
+            }
+            else
+            {
+                return node.value == expectedVal.Value;
+            }
         }
 
         private LinkedList CreateLinkedList(int[] values)

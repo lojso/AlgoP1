@@ -12,6 +12,11 @@ namespace AlgorithmsDataStructures
         {
             value = _value;
         }
+
+        public override string ToString()
+        {
+            return value.ToString();
+        }
     }
 
     public class LinkedList
@@ -98,6 +103,8 @@ namespace AlgorithmsDataStructures
             {
                 curNode = curNode.next;
                 head = curNode;
+                if (curNode == null)
+                    tail = null;
             }
             else
             {
