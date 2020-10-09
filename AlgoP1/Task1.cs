@@ -31,7 +31,7 @@ namespace AlgorithmsDataStructures
                 head = _item;
             else
                 tail.next = _item;
-            
+
             tail = _item;
         }
 
@@ -57,15 +57,56 @@ namespace AlgorithmsDataStructures
 
         public bool Remove(int _value)
         {
-            // здесь будет ваш код удаления одного узла по заданному значению
-            return true; // если узел был удалён
+            Node prevNode = null;
+            var curNode = head;
+
+            while (curNode != null)
+            {
+                if (curNode.value == _value)
+                {
+                    RemoveNode(curNode, prevNode);
+                    return true;
+                }
+
+                prevNode = curNode.value == _value ? prevNode : curNode;
+                curNode = curNode.next;
+            }
+
+            return false;
         }
 
         public void RemoveAll(int _value)
         {
-            // здесь будет ваш код удаления всех узлов по заданному значению
+            Node prevNode = null;
+            var curNode = head;
+
+            while (curNode != null)
+            {
+                if (curNode.value == _value)
+                {
+                    RemoveNode(curNode, prevNode);
+                }
+
+                prevNode = curNode.value == _value ? prevNode : curNode;
+                curNode = curNode.next;
+            }
         }
 
+        private void RemoveNode(Node curNode, Node prevNode)
+        {
+            if (prevNode == null)
+            {
+                curNode = curNode.next;
+                head = curNode;
+            }
+            else
+            {
+                prevNode.next = curNode.next;
+                if (prevNode.next == null)
+                    tail = prevNode;
+            }
+        }
+        
         public void Clear()
         {
             // здесь будет ваш код очистки всего списка
@@ -82,6 +123,19 @@ namespace AlgorithmsDataStructures
 
             // если _nodeAfter = null , 
             // добавьте новый элемент первым в списке 
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+            var curNode = head;
+            while (curNode != null)
+            {
+                result += curNode.value + " ";
+                curNode = curNode.next;
+            }
+
+            return result.TrimEnd();
         }
     }
 }

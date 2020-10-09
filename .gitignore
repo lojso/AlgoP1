@@ -12,3 +12,17 @@ AlgoP1/Properties/
 *.csproj
 
 AlgoP1/Program.cs
+
+packages/
+
+AlgoP1/bin/
+
+Tests/obj/
+
+Tests/Properties/
+
+Tests/packages.config
+
+Tests/bin/
+
+AlgoP1.sln.DotSettings.user
