@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AlgorithmsDataStructures;
+﻿using AlgorithmsDataStructures;
 using NUnit.Framework;
 
 namespace Tests
@@ -26,6 +24,20 @@ namespace Tests
             Assert.True(CheckHeadAndTail(testList.head, head));
             Assert.True(CheckHeadAndTail(testList.tail, tail));
         }
+        
+        [TestCase(null, "", null,  null)]
+        [TestCase(new []{1}, "", null,  null)]
+        [TestCase(new []{1, 2, 3, 4}, "", null,  null)]
+        public void ClearTest(int[] nodeValues, string listAfterOperation, int? head, int? tail)
+        {
+            var testList = CreateLinkedList(nodeValues);
+
+            testList.Clear();
+
+            Assert.True(CheckHeadAndTail(testList.head, head));
+            Assert.True(CheckHeadAndTail(testList.tail, tail));
+        }
+        
         
         [TestCase(null, 2, "", null, null)]
         [TestCase(new []{1}, 1, "", null, null)]
