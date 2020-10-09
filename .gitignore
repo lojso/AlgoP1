@@ -1,0 +1,14 @@
+
+.idea/
+
+.vs/
+
+*.sln
+
+AlgoP1/obj/
+
+AlgoP1/Properties/
+
+*.csproj
+
+AlgoP1/Program.cs
