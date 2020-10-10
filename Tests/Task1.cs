@@ -106,6 +106,7 @@ namespace Tests
         [TestCase(new []{2, 4}, 1, 1, "2 4 1", 2, 1)]
         [TestCase(new []{2}, 0, 1, "2 1", 2, 1)]
         [TestCase(new []{2}, null, 1, "1 2", 1, 2)]
+        [TestCase(null, null, 1, "1", 1, 1)]
         public void InsertAfterTest(int[] nodeValues, int? insertAfterPosition, int insertNodeValue, string resultList, int? head, int? tail)
         {
             var testList = CreateLinkedList(nodeValues);

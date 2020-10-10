@@ -19,6 +19,7 @@ namespace AlgorithmsDataStructures
         }
     }
 
+    // https://skillsmart.ru/algo/15-121-cm/xb0a897a1f.html
     public class LinkedList
     {
         public Node head;
@@ -59,11 +60,12 @@ namespace AlgorithmsDataStructures
             var curNode = head;
             while (curNode != null)
             {
-                if(curNode.value == _value)
+                if (curNode.value == _value)
                     nodes.Add(curNode);
-                
+
                 curNode = curNode.next;
             }
+
             return nodes;
         }
 
@@ -120,7 +122,7 @@ namespace AlgorithmsDataStructures
                     tail = prevNode;
             }
         }
-        
+
         public void Clear()
         {
             head = null;
@@ -136,6 +138,7 @@ namespace AlgorithmsDataStructures
                 count += 1;
                 curNode = curNode.next;
             }
+
             return count;
         }
 
@@ -143,8 +146,17 @@ namespace AlgorithmsDataStructures
         {
             if (_nodeAfter == null)
             {
-                _nodeToInsert.next = head;
-                head = _nodeToInsert;
+                if (head == null)
+                {
+                    head = _nodeToInsert;
+                    tail = _nodeToInsert;
+                    _nodeToInsert.next = null;
+                }
+                else
+                {
+                    _nodeToInsert.next = head;
+                    head = _nodeToInsert;
+                }
             }
             else
             {
