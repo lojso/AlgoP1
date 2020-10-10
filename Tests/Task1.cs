@@ -38,10 +38,44 @@ namespace Tests
             Assert.True(CheckHeadAndTail(testList.tail, tail));
         }
         
+        [TestCase(null, 0, 1)]
+        [TestCase(new []{1}, 1, 1)]
+        [TestCase(new []{1, 1, 1}, 3, 1)]
+        [TestCase(new []{2, 3, 4}, 0, 1)]
+        [TestCase(new []{1, 2, 3, 4}, 1, 1)]
+        [TestCase(new []{1, 1, 2, 3, 4}, 2, 1)]
+        public void FoundAllTest(int[] nodeValues, int expectedNodesCount, int expectedNodesValue)
+        {
+            var testList = CreateLinkedList(nodeValues);
+
+            var foundNodes = testList.FindAll(expectedNodesValue);
+
+            foreach (var node in foundNodes)
+            {
+                Assert.True(node.value == expectedNodesValue);
+            }
+            
+            Assert.True(foundNodes.Count == expectedNodesCount);
+        }
+        
+        [TestCase(null, 0)]
+        [TestCase(new []{1}, 1)]
+        [TestCase(new []{1, 1, 1}, 3)]
+        [TestCase(new []{2, 3, 4}, 3)]
+        [TestCase(new []{1, 2, 3, 4}, 4)]
+        [TestCase(new []{1, 1, 2, 3, 4}, 5)]
+        public void CountTest(int[] nodeValues, int expectedCount)
+        {
+            var testList = CreateLinkedList(nodeValues);
+
+            Assert.True(testList.Count() == expectedCount);
+        }
+        
         
         [TestCase(null, 2, "", null, null)]
         [TestCase(new []{1}, 1, "", null, null)]
         [TestCase(new []{1}, 2, "1", 1, 1)]
+        [TestCase(new []{1, 1}, 1, "", null, null)]
         [TestCase(new []{1, 2}, 3, "1 2", 1, 2)]
         [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4", 2, 4)]
         [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4", 1, 4)]
