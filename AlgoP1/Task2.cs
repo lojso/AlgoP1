@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures.Task1
+namespace AlgorithmsDataStructures
 {
     public class Node
     {
         public int value;
-        public Node next;
+        public Node next, prev;
 
         public Node(int _value)
         {
             value = _value;
+            next = null;
+            prev = null;
         }
 
         public override string ToString()
@@ -19,13 +21,12 @@ namespace AlgorithmsDataStructures.Task1
         }
     }
 
-    // https://skillsmart.ru/algo/15-121-cm/xb0a897a1f.html
-    public class LinkedList
+    public class LinkedList2
     {
         public Node head;
         public Node tail;
 
-        public LinkedList()
+        public LinkedList2()
         {
             head = null;
             tail = null;
@@ -34,9 +35,16 @@ namespace AlgorithmsDataStructures.Task1
         public void AddInTail(Node _item)
         {
             if (head == null)
+            {
                 head = _item;
+                head.next = null;
+                head.prev = null;
+            }
             else
+            {
                 tail.next = _item;
+                _item.prev = tail;
+            }
 
             tail = _item;
         }
@@ -71,18 +79,16 @@ namespace AlgorithmsDataStructures.Task1
 
         public bool Remove(int _value)
         {
-            Node prevNode = null;
             var curNode = head;
 
             while (curNode != null)
             {
                 if (curNode.value == _value)
                 {
-                    RemoveNode(curNode, prevNode);
+                    RemoveNode(curNode);
                     return true;
                 }
 
-                prevNode = curNode.value == _value ? prevNode : curNode;
                 curNode = curNode.next;
             }
 
@@ -91,35 +97,36 @@ namespace AlgorithmsDataStructures.Task1
 
         public void RemoveAll(int _value)
         {
-            Node prevNode = null;
             var curNode = head;
 
             while (curNode != null)
             {
                 if (curNode.value == _value)
                 {
-                    RemoveNode(curNode, prevNode);
+                    RemoveNode(curNode);
                 }
 
-                prevNode = curNode.value == _value ? prevNode : curNode;
                 curNode = curNode.next;
             }
         }
 
-        private void RemoveNode(Node curNode, Node prevNode)
+        private void RemoveNode(Node node)
         {
-            if (prevNode == null)
+            if (node.prev == null)
             {
-                curNode = curNode.next;
-                head = curNode;
-                if (curNode == null)
+                head = node.next;
+
+                if (head != null)
+                    head.prev = null;
+
+                if (head == null)
                     tail = null;
             }
             else
             {
-                prevNode.next = curNode.next;
-                if (prevNode.next == null)
-                    tail = prevNode;
+                node.prev.next = node.next;
+                if (node.prev.next == null)
+                    tail = node.prev;
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using AlgorithmsDataStructures;
+using AlgorithmsDataStructures.Task1;
 
 namespace AlgoP1
 {

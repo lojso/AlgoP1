@@ -1,12 +1,12 @@
 ﻿using System.CodeDom;
 using AlgoP1;
-using AlgorithmsDataStructures.Task1;
+using AlgorithmsDataStructures;
 using NUnit.Framework;
 
 namespace Tests
 {
     [TestFixture]
-    public class Task1
+    public class Task2
     {
         [TestCase(null, 2, "", false,null, null) ]
         [TestCase(new []{1}, 1, "", true, null, null)]
@@ -59,7 +59,6 @@ namespace Tests
             
             Assert.True(foundNodes.Count == expectedNodesCount);
         }
-        
         
         [TestCase(null, 0)]
         [TestCase(new []{1}, 1)]
@@ -120,34 +119,8 @@ namespace Tests
             Assert.True(CheckHeadAndTail(testList.head, head));
             Assert.True(CheckHeadAndTail(testList.tail, tail));
         }
-        
-        [TestCase(new []{1}, new []{1}, "2", 2, 2)]
-        [TestCase(new []{1, 2, 3}, new []{4, 1, 3}, "5 3 6", 5, 6)]
-        [TestCase(null, null, "", null, null)]
-        public void AddListsTest(int[] firstListValues, int[] secondListValues, string listAfterOperation, int? head, int? tail)
-        {
-            var fList = CreateLinkedList(firstListValues);
-            var sList = CreateLinkedList(secondListValues);
 
-            var testList = Task1Ad1.Add(fList, sList);
-            
-            Assert.True(testList.ToString().Equals(listAfterOperation));
-            Assert.True(CheckHeadAndTail(testList.head, head));
-            Assert.True(CheckHeadAndTail(testList.tail, tail));
-        }
-        
-        [TestCase(new []{1, 2, 3}, new []{4, 1})]
-        public void AddListsDiffSizeTest(int[] firstListValues, int[] secondListValues)
-        {
-            var fList = CreateLinkedList(firstListValues);
-            var sList = CreateLinkedList(secondListValues);
-
-            var testList = Task1Ad1.Add(fList, sList);
-            
-            Assert.True(testList == null);
-        }
-
-        private Node GetNodeAtPosition(LinkedList testList, int? insertAfterPosition)
+        private Node GetNodeAtPosition(LinkedList2 testList, int? insertAfterPosition)
         {
             var curNode = testList.head;
 
@@ -179,9 +152,9 @@ namespace Tests
             }
         }
 
-        private LinkedList CreateLinkedList(int[] values)
+        private LinkedList2 CreateLinkedList(int[] values)
         {
-            LinkedList result = new LinkedList();
+            LinkedList2 result = new LinkedList2();
 
             if (values == null)
             {
