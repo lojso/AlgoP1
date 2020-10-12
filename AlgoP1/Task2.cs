@@ -113,21 +113,26 @@ namespace AlgorithmsDataStructures
 
         private void RemoveNode(Node node)
         {
+            if (head == tail)
+            {
+                Clear();
+                return;
+            }
+            
             if (node.prev == null)
             {
                 head = node.next;
-
-                if (head != null)
-                    head.prev = null;
-
-                if (head == null)
-                    tail = null;
+                head.prev = null;
+            }
+            else if (node.next == null)
+            {
+                tail = tail.prev;
+                tail.next = null;
             }
             else
             {
+                node.next.prev = node.prev;
                 node.prev.next = node.next;
-                if (node.prev.next == null)
-                    tail = node.prev;
             }
         }
 
@@ -152,27 +157,56 @@ namespace AlgorithmsDataStructures
 
         public void InsertAfter(Node _nodeAfter, Node _nodeToInsert)
         {
-            if (_nodeAfter == null)
+            if (_nodeAfter != null)
             {
-                if (head == null)
+                _nodeToInsert.prev = _nodeAfter;
+                _nodeToInsert.next = _nodeAfter.next;
+                _nodeToInsert.prev.next = _nodeToInsert;
+
+                if (_nodeToInsert.next != null)
                 {
-                    head = _nodeToInsert;
-                    tail = _nodeToInsert;
-                    _nodeToInsert.next = null;
+                    _nodeToInsert.next.prev = _nodeToInsert;
                 }
                 else
                 {
-                    _nodeToInsert.next = head;
-                    head = _nodeToInsert;
+                    tail = _nodeToInsert;
                 }
+            }
+            else if (head != null)
+            {
+                _nodeToInsert.next = head;
+                head.prev = _nodeToInsert;
+                head = _nodeToInsert;
             }
             else
             {
-                _nodeToInsert.next = _nodeAfter.next;
-                _nodeAfter.next = _nodeToInsert;
-                if (_nodeToInsert.next == null)
-                    tail = _nodeToInsert;
+                _nodeToInsert.next = null;
+                _nodeToInsert.prev = null;
+                head = _nodeToInsert;
+                tail = _nodeToInsert;
             }
+
+                // if (_nodeAfter == null)
+            // {
+            //     if (head == null)
+            //     {
+            //         head = _nodeToInsert;
+            //         tail = _nodeToInsert;
+            //         _nodeToInsert.next = null;
+            //     }
+            //     else
+            //     {
+            //         _nodeToInsert.next = head;
+            //         head = _nodeToInsert;
+            //     }
+            // }
+            // else
+            // {
+            //     _nodeToInsert.next = _nodeAfter.next;
+            //     _nodeAfter.next = _nodeToInsert;
+            //     if (_nodeToInsert.next == null)
+            //         tail = _nodeToInsert;
+            // }
         }
 
         public override string ToString()

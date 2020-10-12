@@ -11,12 +11,16 @@ namespace Tests
         [TestCase(null, 2, "", false,null, null) ]
         [TestCase(new []{1}, 1, "", true, null, null)]
         [TestCase(new []{1}, 2, "1", false, 1, 1)]
-        [TestCase(new []{1, 2}, 3, "1 2", false, 1, 2)]
         [TestCase(new []{1, 2}, 1, "2", true, 2, 2)]
         [TestCase(new []{1, 2}, 2, "1", true, 1, 1)]
+        [TestCase(new []{1, 2}, 3, "1 2", false, 1, 2)]
         [TestCase(new []{1, 2, 3, 4}, 1, "2 3 4", true, 2, 4)]
         [TestCase(new []{1, 2, 3, 4}, 2, "1 3 4", true, 1, 4)]
         [TestCase(new []{1, 2, 3, 4}, 4, "1 2 3", true, 1, 3)]
+        [TestCase(new []{1, 1}, 1, "1", true, 1, 1)]
+        [TestCase(new []{1, 1, 2, 3, 4}, 1, "1 2 3 4", true, 1, 4)]
+        [TestCase(new []{1, 1, 2, 1, 3, 4, 1}, 1, "1 2 1 3 4 1", true, 1, 1)]
+        [TestCase(new []{5, 2, 3, 4, 5}, 5, "2 3 4 5", true, 2, 5)]
         public void RemoveTest(int[] nodeValues, int valToRemove, string listAfterOperation, bool result, int? head, int? tail)
         {
             var testList = CreateLinkedList(nodeValues);
@@ -170,6 +174,5 @@ namespace Tests
 
             return result;
         }
-        
     }
 }
