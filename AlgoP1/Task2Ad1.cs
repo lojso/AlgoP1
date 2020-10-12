@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
-namespace AlgorithmsDataStructures
+namespace Task2Ad1
 {
     public class Node
     {
+        public bool IsDummy { get; private set; }
         public int value;
         public Node next, prev;
 
-        public Node(int _value)
+        public Node(int _value, bool isDummy = false)
         {
+            IsDummy = isDummy;
             value = _value;
             next = null;
             prev = null;
@@ -21,39 +23,42 @@ namespace AlgorithmsDataStructures
         }
     }
 
-    // https://skillsmart.ru/algo/15-121-cm/bafa83f3b9.html
     public class LinkedList2
     {
-        public Node head;
-        public Node tail;
+        public Node head
+        {
+            get { return _dummyHead.next; }
+        }
+
+        public Node tail
+        {
+            get { return _dummyTail.prev; }
+        }
+
+        private Node _dummyHead;
+        private Node _dummyTail;
 
         public LinkedList2()
         {
-            head = null;
-            tail = null;
+            Node dummyFirst = new Node(0, true);
+            Node dummyLast = new Node(0, true);
+
+            _dummyHead = dummyFirst;
+            _dummyTail = dummyLast;
+
+            Clear();
         }
 
         public void AddInTail(Node _item)
         {
-            if (head == null)
-            {
-                head = _item;
-                head.next = null;
-                head.prev = null;
-            }
-            else
-            {
-                tail.next = _item;
-                _item.prev = tail;
-            }
-
-            tail = _item;
+            InsertAfter(tail, _item);
         }
+
 
         public Node Find(int _value)
         {
             Node node = head;
-            while (node != null)
+            while (!node.IsDummy)
             {
                 if (node.value == _value)
                     return node;
@@ -67,7 +72,7 @@ namespace AlgorithmsDataStructures
         {
             List<Node> nodes = new List<Node>();
             var curNode = head;
-            while (curNode != null)
+            while (!curNode.IsDummy)
             {
                 if (curNode.value == _value)
                     nodes.Add(curNode);
@@ -82,7 +87,7 @@ namespace AlgorithmsDataStructures
         {
             var curNode = head;
 
-            while (curNode != null)
+            while (!curNode.IsDummy)
             {
                 if (curNode.value == _value)
                 {
@@ -100,7 +105,7 @@ namespace AlgorithmsDataStructures
         {
             var curNode = head;
 
-            while (curNode != null)
+            while (!curNode.IsDummy)
             {
                 if (curNode.value == _value)
                 {
@@ -113,35 +118,21 @@ namespace AlgorithmsDataStructures
 
         private void RemoveNode(Node node)
         {
-            if (node.prev == null)
-            {
-                head = node.next;
-
-                if (head != null)
-                    head.prev = null;
-
-                if (head == null)
-                    tail = null;
-            }
-            else
-            {
-                node.prev.next = node.next;
-                if (node.prev.next == null)
-                    tail = node.prev;
-            }
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
 
         public void Clear()
         {
-            head = null;
-            tail = null;
+            _dummyHead.next = _dummyTail;
+            _dummyTail.prev = _dummyHead;
         }
 
         public int Count()
         {
             int count = 0;
             var curNode = head;
-            while (curNode != null)
+            while (!curNode.IsDummy)
             {
                 count += 1;
                 curNode = curNode.next;
@@ -154,24 +145,31 @@ namespace AlgorithmsDataStructures
         {
             if (_nodeAfter == null)
             {
-                if (head == null)
-                {
-                    head = _nodeToInsert;
-                    tail = _nodeToInsert;
-                    _nodeToInsert.next = null;
-                }
-                else
-                {
-                    _nodeToInsert.next = head;
-                    head = _nodeToInsert;
-                }
+                InsertBefore(head, _nodeToInsert);
             }
             else
             {
+                _nodeToInsert.prev = _nodeAfter;
                 _nodeToInsert.next = _nodeAfter.next;
-                _nodeAfter.next = _nodeToInsert;
-                if (_nodeToInsert.next == null)
-                    tail = _nodeToInsert;
+
+                _nodeToInsert.prev.next = _nodeToInsert;
+                _nodeToInsert.next.prev = _nodeToInsert;
+            }
+        }
+
+        public void InsertBefore(Node _nodeBefore, Node _nodeToInsert)
+        {
+            if (_nodeBefore == null)
+            {
+                InsertAfter(tail, _nodeToInsert);
+            }
+            else
+            {
+                _nodeToInsert.next = _nodeBefore;
+                _nodeToInsert.prev = _nodeBefore.prev;
+
+                _nodeToInsert.prev.next = _nodeToInsert;
+                _nodeToInsert.next.prev = _nodeToInsert;
             }
         }
 
@@ -179,7 +177,7 @@ namespace AlgorithmsDataStructures
         {
             string result = "";
             var curNode = head;
-            while (curNode != null)
+            while (!curNode.IsDummy)
             {
                 result += curNode.value + " ";
                 curNode = curNode.next;
