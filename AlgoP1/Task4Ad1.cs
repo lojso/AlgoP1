@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// https://skillsmart.ru/algo/15-121-cm/e192yed1ab.html
-namespace AlgorithmsDataStructures
+namespace Task4Ad1
 {
     public class Stack<T>
     {
@@ -23,7 +22,7 @@ namespace AlgorithmsDataStructures
             if (Size() == 0)
                 return default(T);
 
-            var resultNode = _list.tail;
+            var resultNode = _list.head;
             
             _list.RemoveNode(resultNode);
             
@@ -32,7 +31,7 @@ namespace AlgorithmsDataStructures
 
         public void Push(T val)
         {
-            _list.AddInTail(new Node<T>(val));
+            _list.AddInHead(new Node<T>(val));
         }
 
         public T Peek()
@@ -93,6 +92,11 @@ namespace AlgorithmsDataStructures
         public void AddInTail(Node<T> _item)
         {
             InsertAfter(tail, _item);
+        }
+        
+        public void AddInHead(Node<T> _item)
+        {
+            InsertBefore(head, _item);
         }
 
 

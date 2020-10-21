@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// https://skillsmart.ru/algo/15-121-cm/bafa83f3b9.html
 namespace AlgorithmsDataStructures.Task2
 {
     public class Node
@@ -20,8 +21,7 @@ namespace AlgorithmsDataStructures.Task2
             return value.ToString();
         }
     }
-
-    // https://skillsmart.ru/algo/15-121-cm/bafa83f3b9.html
+    
     public class LinkedList2
     {
         public Node head;
