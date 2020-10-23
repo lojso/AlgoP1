@@ -1,52 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-    
-// https://skillsmart.ru/algo/15-121-cm/b54ra0da92.html
-namespace Task5
+
+namespace AlgorithmsDataStructures
 {
-    public class Queue<T>
+
+    class Deque<T>
     {
         private LinkedList2<T> _list;
         
-        public Queue()
+        public Deque()
         {
             _list = new LinkedList2<T>();
         }
 
-        public void RotateRight(int n)
+        public void AddFront(T item)
         {
-            n = n % _list.Count();
-            for (int i = 0; i < n; i++)
-                RotateRight();
+            _list.InsertBefore(_list.head, new Node<T>(item));
         }
 
-        private void RotateRight()
+        public void AddTail(T item)
         {
-            var firstElem = _list.head;
-            _list.RemoveNode(firstElem);
-            _list.InsertAfter(_list.tail, firstElem);
+            _list.InsertAfter(_list.tail, new Node<T>(item));
         }
 
-        public void Enqueue(T item)
+        public T RemoveFront()
         {
-            _list.AddInTail(new Node<T>(item));
-        }
-
-        public T Dequeue()
-        {
-            if(_list.IsEmpty())
+            if (_list.IsEmpty())
                 return default(T);
-            var resultNode = _list.head;
-            _list.RemoveNode(resultNode);
-            return resultNode.value;
+            
+            var result = _list.head;
+            _list.RemoveNode(result);
+            return result.value;
         }
 
+        public T RemoveTail()
+        {
+            if (_list.IsEmpty())
+                return default(T);
+            
+            var result = _list.tail;
+            _list.RemoveNode(result);
+            return result.value;
+        }
+        
         public int Size()
         {
-            return _list.Count();
+            return _list.Count(); // размер очереди
         }
     }
     
+        
     public class Node<T>
     {
         public bool IsDummy { get; private set; }
