@@ -11,7 +11,21 @@ namespace AlgorithmsDataStructures
         public Queue()
         {
             _list = new LinkedList2<T>();
-        } 
+        }
+
+        public void RotateRight(int n)
+        {
+            n = n % _list.Count();
+            for (int i = 0; i < n; i++)
+                RotateRight();
+        }
+
+        private void RotateRight()
+        {
+            var firstElem = _list.head;
+            _list.RemoveNode(firstElem);
+            _list.InsertAfter(_list.tail, firstElem);
+        }
 
         public void Enqueue(T item)
         {
