@@ -9,12 +9,10 @@ namespace AlgoP1
         public static bool IsPalindrome(string word)
         {
             d = StringToDeque(word);
-            int i = 0;
-            while (d.Size() > 0)
+            while (d.Size() > 1)
             {
-                if (word[i] != d.RemoveTail())
+                if (d.RemoveFront() != d.RemoveTail())
                     return false;
-                i++;
             }
 
             return true;
