@@ -8,8 +8,8 @@ namespace Task4Ad3
 {
     public static class Calculator
     {
-        private static AlgorithmsDataStructures.Stack<string> _expression;
-        private static AlgorithmsDataStructures.Stack<int> _currentResult;
+        private static Task6.Stack<string> _expression;
+        private static Task6.Stack<int> _currentResult;
         
         public static int Calculate(string expression)
         {
@@ -60,9 +60,9 @@ namespace Task4Ad3
             _currentResult.Push(sum);
         }
 
-        private static AlgorithmsDataStructures.Stack<string> ParseExpression(string expression)
+        private static Task6.Stack<string> ParseExpression(string expression)
         {
-            AlgorithmsDataStructures.Stack<string> result = new AlgorithmsDataStructures.Stack<string>();
+            Task6.Stack<string> result = new Task6.Stack<string>();
             expression = Reverse(expression);
             var splittedExpr = expression.Split(' ');
             foreach (var ch in splittedExpr)
@@ -82,8 +82,8 @@ namespace Task4Ad3
 
         private static void Reset()
         {
-            _expression = new AlgorithmsDataStructures.Stack<string>();
-            _currentResult = new AlgorithmsDataStructures.Stack<int>();
+            _expression = new Task6.Stack<string>();
+            _currentResult = new Task6.Stack<int>();
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 // https://skillsmart.ru/algo/15-121-cm/xb0a897a1f.html
-namespace AlgorithmsDataStructures.Task1
+namespace Task6.Task1
 {
     public class Node
     {

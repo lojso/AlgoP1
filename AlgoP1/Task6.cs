@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures
+// https://skillsmart.ru/algo/15-121-cm/c32d45671.html
+namespace Task6
 {
 
     class Deque<T>

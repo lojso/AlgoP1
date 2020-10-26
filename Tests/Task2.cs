@@ -1,6 +1,6 @@
 ﻿using System.CodeDom;
 using AlgoP1;
-using AlgorithmsDataStructures.Task2;
+using Task6.Task2;
 using NUnit.Framework;
 
 namespace Tests

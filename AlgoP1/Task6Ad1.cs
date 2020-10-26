@@ -1,4 +1,4 @@
-﻿using AlgorithmsDataStructures;
+﻿using Task6;
 
 namespace AlgoP1
 {

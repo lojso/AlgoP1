@@ -1,5 +1,5 @@
 ﻿using System;
-using AlgorithmsDataStructures;
+using Task6;
 using NUnit.Framework;
 
 namespace Tests

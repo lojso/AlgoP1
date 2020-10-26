@@ -7,8 +7,8 @@ namespace Task4Ad2
     {
         public static bool Parse(string brackets)
         {
-            AlgorithmsDataStructures.Stack<char> bracketsStack = new AlgorithmsDataStructures.Stack<char>();
-            AlgorithmsDataStructures.Stack<bool> stack = new AlgorithmsDataStructures.Stack<bool>();
+            Task6.Stack<char> bracketsStack = new Task6.Stack<char>();
+            Task6.Stack<bool> stack = new Task6.Stack<bool>();
 
             // Проверяем что правых скобочек сбалансированное количество
             foreach (var bracket in brackets)
@@ -35,8 +35,8 @@ namespace Task4Ad2
                 return false;
             
             // Проверяем что левых скобочек сбалансированное количество
-            bracketsStack = new AlgorithmsDataStructures.Stack<char>();
-            stack = new AlgorithmsDataStructures.Stack<bool>();
+            bracketsStack = new Task6.Stack<char>();
+            stack = new Task6.Stack<bool>();
 
             for (var index = brackets.Length - 1; index >= 0; index--)
             {
