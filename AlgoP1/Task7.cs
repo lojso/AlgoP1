@@ -53,6 +53,26 @@ namespace AlgorithmsDataStructures
             _ascending = asc;
         }
 
+        public Node<T> Find(T val)
+        {
+            var curNode = head;
+            while (!curNode.IsDummy)
+            {
+                if (_ascending && IsBigger(curNode.value, val))
+                    return null;
+                
+                if (!_ascending && IsBigger(val, curNode.value))
+                    return null;
+                
+                if (curNode.value.Equals(val))
+                    return curNode;
+                
+                curNode = curNode.next;
+            }
+            
+            return null; // здесь будет ваш код
+        }
+        
         public int Compare(T v1, T v2)
         {
             int result = 0;
@@ -98,19 +118,6 @@ namespace AlgorithmsDataStructures
                 curNode = curNode.next;
             }
             InsertAfter(tail, new Node<T>(value));
-        }
-
-        public Node<T> Find(T val)
-        {
-            var curNode = head;
-            while (!curNode.IsDummy)
-            {
-                if (curNode.value.Equals(val))
-                    return curNode;
-                curNode = curNode.next;
-            }
-            
-            return null; // здесь будет ваш код
         }
 
         public void Delete(T val)
