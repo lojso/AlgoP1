@@ -8,64 +8,32 @@ namespace AlgorithmsDataStructures
     {
         public T value;
         public Node<T> next, prev;
-        public bool IsDummy { get; private set; }
 
         public Node(T _value)
         {
             value = _value;
-            IsDummy = false;
             next = null;
             prev = null;
         }
-
-        public Node(T _value, bool isDummy) : this(_value)
-        {
-            IsDummy = isDummy;
-        }
     }
+
 
     public class OrderedList<T>
     {
-        public Node<T> head
-        {
-            get { return RealHead.IsDummy ? null : RealHead; }
-        }
-
-        public Node<T> tail
-        {
-            get { return RealTail.IsDummy ? null : RealTail; }
-        }
-        
-        private Node<T> RealHead
-        {
-            get { return _dummyHead.next; }
-        }
-
-        private Node<T> RealTail
-        {
-            get { return _dummyTail.prev; }
-        }
-
-        private Node<T> _dummyHead;
-        private Node<T> _dummyTail;
-        
+        public Node<T> head, tail;
         private bool _ascending;
 
         public OrderedList(bool asc)
         {
-            Node<T> dummyFirst = new Node<T>(default(T), true);
-            Node<T> dummyLast = new Node<T>(default(T), true);
-            
-            _dummyHead = dummyFirst;
-            _dummyTail = dummyLast;
-
-            Clear(asc);
+            head = null;
+            tail = null;
+            _ascending = asc;
         }
 
         public Node<T> Find(T val)
         {
-            var curNode = RealHead;
-            while (!curNode.IsDummy)
+            var curNode = head;
+            while (curNode != null)
             {
                 if (_ascending && IsBigger(curNode.value, val))
                     return null;
@@ -78,8 +46,8 @@ namespace AlgorithmsDataStructures
                 
                 curNode = curNode.next;
             }
-            
-            return null; // здесь будет ваш код
+
+            return null;
         }
         
         public int Compare(T v1, T v2)
@@ -111,22 +79,22 @@ namespace AlgorithmsDataStructures
         {
             if (Count() == 0)
             {
-                InsertBefore(RealHead, new Node<T>(value));
+                InsertAfter(null, new Node<T>(value));
                 return;
             }
             
-            var curNode = RealHead;
-            while (!curNode.IsDummy)
+            var curNode = head;
+            while (curNode != null)
             {
                 if (IsBigger(curNode.value, value) && _ascending ||
                     IsLower(curNode.value, value) && !_ascending)
                 {
-                    InsertBefore(curNode, new Node<T>(value));
+                    InsertAfter(curNode.prev, new Node<T>(value));
                     return;
                 }
                 curNode = curNode.next;
             }
-            InsertAfter(RealTail, new Node<T>(value));
+            InsertAfter(tail, new Node<T>(value));
         }
 
         public void Delete(T val)
@@ -137,15 +105,15 @@ namespace AlgorithmsDataStructures
         public void Clear(bool asc)
         {
             _ascending = asc;
-            _dummyHead.next = _dummyTail;
-            _dummyTail.prev = _dummyHead;
+            head = null;
+            tail = null;
         }
 
         public int Count()
         {
             int count = 0;
-            var curNode = RealHead;
-            while (!curNode.IsDummy)
+            var curNode = head;
+            while (curNode != null)
             {
                 count += 1;
                 curNode = curNode.next;
@@ -154,11 +122,10 @@ namespace AlgorithmsDataStructures
             return count;
         }
 
-        List<Node<T>> GetAll() // выдать все элементы упорядоченного 
-            // списка в виде стандартного списка
+        List<Node<T>> GetAll() 
         {
             List<Node<T>> r = new List<Node<T>>();
-            Node<T> node = RealHead;
+            Node<T> node = head;
             while(node != null)
             {
                 r.Add(node);
@@ -170,8 +137,8 @@ namespace AlgorithmsDataStructures
         public override string ToString()
         {
             string result = "";
-            var curNode = RealHead;
-            while (!curNode.IsDummy)
+            var curNode = head;
+            while (curNode != null)
             {
                 result += curNode.value + " ";
                 curNode = curNode.next;
@@ -180,45 +147,61 @@ namespace AlgorithmsDataStructures
             return result.TrimEnd();
         }
         
-        private void InsertAfter(Node<T> _nodeAfter, Node<T> _nodeToInsert)
+        public void InsertAfter(Node<T> _nodeAfter, Node<T> _nodeToInsert)
         {
-            if (_nodeAfter == null)
-            {
-                InsertBefore(RealHead, _nodeToInsert);
-            }
-            else
+            if (_nodeAfter != null)
             {
                 _nodeToInsert.prev = _nodeAfter;
                 _nodeToInsert.next = _nodeAfter.next;
-
                 _nodeToInsert.prev.next = _nodeToInsert;
-                _nodeToInsert.next.prev = _nodeToInsert;
-            }
-        }
 
-        private void InsertBefore(Node<T> _nodeBefore, Node<T> _nodeToInsert)
-        {
-            if (_nodeBefore == null)
+                if (_nodeToInsert.next != null)
+                {
+                    _nodeToInsert.next.prev = _nodeToInsert;
+                }
+                else
+                {
+                    tail = _nodeToInsert;
+                }
+            }
+            else if (head != null)
             {
-                InsertAfter(RealTail, _nodeToInsert);
+                _nodeToInsert.next = head;
+                head.prev = _nodeToInsert;
+                head = _nodeToInsert;
             }
             else
             {
-                _nodeToInsert.next = _nodeBefore;
-                _nodeToInsert.prev = _nodeBefore.prev;
-
-                _nodeToInsert.prev.next = _nodeToInsert;
-                _nodeToInsert.next.prev = _nodeToInsert;
+                _nodeToInsert.next = null;
+                _nodeToInsert.prev = null;
+                head = _nodeToInsert;
+                tail = _nodeToInsert;
             }
         }
-        
+
         private void RemoveNode(Node<T> node)
         {
-            if(node == null)
+            if (head == tail)
+            {
+                Clear(_ascending);
                 return;
+            }
             
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
+            if (node.prev == null)
+            {
+                head = node.next;
+                head.prev = null;
+            }
+            else if (node.next == null)
+            {
+                tail = tail.prev;
+                tail.next = null;
+            }
+            else
+            {
+                node.next.prev = node.prev;
+                node.prev.next = node.next;
+            }
         }
     }
  

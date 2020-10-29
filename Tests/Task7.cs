@@ -16,12 +16,13 @@ namespace Tests
             stack.Add(3);
             stack.Add(5);
             stack.Add(0);
+            stack.Add(-1);
             stack.Add(2);
             stack.Add(7);
             stack.Add(4);
             stack.Add(4);
             
-            Assert.True(stack.ToString().Equals("0 1 2 3 4 4 5 7"));
+            Assert.True(stack.ToString().Equals("-1 0 1 2 3 4 4 5 7"));
         }
         
         [Test]
@@ -33,12 +34,13 @@ namespace Tests
             stack.Add(3);
             stack.Add(5);
             stack.Add(0);
+            stack.Add(-1);
             stack.Add(2);
             stack.Add(7);
             stack.Add(4);
             stack.Add(4);
             
-            Assert.True(stack.ToString().Equals("7 5 4 4 3 2 1 0"));
+            Assert.True(stack.ToString().Equals("7 5 4 4 3 2 1 0 -1"));
         }
         
         [Test]
