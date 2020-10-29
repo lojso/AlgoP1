@@ -28,10 +28,20 @@ namespace AlgorithmsDataStructures
     {
         public Node<T> head
         {
-            get { return _dummyHead.next; }
+            get { return RealHead.IsDummy ? null : RealHead; }
         }
 
         public Node<T> tail
+        {
+            get { return RealTail.IsDummy ? null : RealTail; }
+        }
+        
+        private Node<T> RealHead
+        {
+            get { return _dummyHead.next; }
+        }
+
+        private Node<T> RealTail
         {
             get { return _dummyTail.prev; }
         }
@@ -50,12 +60,11 @@ namespace AlgorithmsDataStructures
             _dummyTail = dummyLast;
 
             Clear(asc);
-            _ascending = asc;
         }
 
         public Node<T> Find(T val)
         {
-            var curNode = head;
+            var curNode = RealHead;
             while (!curNode.IsDummy)
             {
                 if (_ascending && IsBigger(curNode.value, val))
@@ -102,11 +111,11 @@ namespace AlgorithmsDataStructures
         {
             if (Count() == 0)
             {
-                InsertBefore(head, new Node<T>(value));
+                InsertBefore(RealHead, new Node<T>(value));
                 return;
             }
             
-            var curNode = head;
+            var curNode = RealHead;
             while (!curNode.IsDummy)
             {
                 if (IsBigger(curNode.value, value) && _ascending ||
@@ -117,7 +126,7 @@ namespace AlgorithmsDataStructures
                 }
                 curNode = curNode.next;
             }
-            InsertAfter(tail, new Node<T>(value));
+            InsertAfter(RealTail, new Node<T>(value));
         }
 
         public void Delete(T val)
@@ -135,7 +144,7 @@ namespace AlgorithmsDataStructures
         public int Count()
         {
             int count = 0;
-            var curNode = head;
+            var curNode = RealHead;
             while (!curNode.IsDummy)
             {
                 count += 1;
@@ -149,7 +158,7 @@ namespace AlgorithmsDataStructures
             // списка в виде стандартного списка
         {
             List<Node<T>> r = new List<Node<T>>();
-            Node<T> node = head;
+            Node<T> node = RealHead;
             while(node != null)
             {
                 r.Add(node);
@@ -161,7 +170,7 @@ namespace AlgorithmsDataStructures
         public override string ToString()
         {
             string result = "";
-            var curNode = head;
+            var curNode = RealHead;
             while (!curNode.IsDummy)
             {
                 result += curNode.value + " ";
@@ -175,7 +184,7 @@ namespace AlgorithmsDataStructures
         {
             if (_nodeAfter == null)
             {
-                InsertBefore(head, _nodeToInsert);
+                InsertBefore(RealHead, _nodeToInsert);
             }
             else
             {
@@ -191,7 +200,7 @@ namespace AlgorithmsDataStructures
         {
             if (_nodeBefore == null)
             {
-                InsertAfter(tail, _nodeToInsert);
+                InsertAfter(RealTail, _nodeToInsert);
             }
             else
             {

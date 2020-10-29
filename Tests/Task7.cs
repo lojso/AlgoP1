@@ -132,7 +132,10 @@ namespace Tests
         public void TestCreateSize()
         {
             var stack = new OrderedList<int>(true);
+
             Assert.True(stack.Count() == 0);
+            Assert.True(stack.head == null);
+            Assert.True(stack.tail == null);
         }
     }
 }
