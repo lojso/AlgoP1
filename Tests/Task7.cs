@@ -97,6 +97,8 @@ namespace Tests
             stack.Add(4);
             
             stack.Clear(false);
+            Assert.True(stack.Count() == 0);
+            
             stack.Add(1);
             stack.Add(2);
             
@@ -118,11 +120,19 @@ namespace Tests
             stack.Add(4);
             
             stack.Clear(true);
+            Assert.True(stack.Count() == 0);
             stack.Add(1);
             stack.Add(2);
             
             Assert.True(stack.ToString().Equals("1 2"));
             Assert.True(stack.Count() == 2);
+        }
+        
+        [Test]
+        public void TestCreateSize()
+        {
+            var stack = new OrderedList<int>(true);
+            Assert.True(stack.Count() == 0);
         }
     }
 }
