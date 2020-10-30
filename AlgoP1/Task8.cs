@@ -20,31 +20,57 @@ namespace AlgorithmsDataStructures
         }
 
         public int HashFun(string value)
-        {    
-            // всегда возвращает корректный индекс слота
-            return 0;
+        {
+            return value.GetHashCode() % size;
         }
 
         public int SeekSlot(string value)
         {
             // находит индекс пустого слота для значения, или -1
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (slots[curIndex] == null)
+                    return curIndex;
+
+                curIndex += step;
+
+            } while (curIndex != hashVal);
+            
             return -1;
         }
 
         public int Put(string value)
         {
-            // записываем значение по хэш-функции
-         
-            // возвращается индекс слота или -1
-            // если из-за коллизий элемент не удаётся разместить 
-            return -1;
+            var index = SeekSlot(value);
+            if (index == -1)
+                return -1;
+
+            slots[index] = value;
+
+            return index;
         }
 
         public int Find(string value)
         {
-            // находит индекс слота со значением, или -1
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (slots[curIndex] == value)
+                    return curIndex;
+                
+                if (slots[curIndex] == null)
+                    return -1;
+
+                curIndex += step;
+
+            } while (curIndex != hashVal);
+            
             return -1;
         }
     }
- 
 }
