@@ -21,7 +21,7 @@ namespace AlgorithmsDataStructures
 
         public int HashFun(string value)
         {
-            return value.GetHashCode() % size;
+            return Math.Abs(value.GetHashCode()) % size;
         }
 
         public int SeekSlot(string value)
@@ -32,10 +32,11 @@ namespace AlgorithmsDataStructures
 
             do
             {
-                if (slots[curIndex] == null)
+                if (slots[curIndex] == null || slots[curIndex] == value)
                     return curIndex;
 
                 curIndex += step;
+                curIndex %= size;
 
             } while (curIndex != hashVal);
             
@@ -44,6 +45,8 @@ namespace AlgorithmsDataStructures
 
         public int Put(string value)
         {
+            
+            
             var index = SeekSlot(value);
             if (index == -1)
                 return -1;
@@ -67,6 +70,7 @@ namespace AlgorithmsDataStructures
                     return -1;
 
                 curIndex += step;
+                curIndex %= size;
 
             } while (curIndex != hashVal);
             
