@@ -10,37 +10,85 @@ namespace AlgorithmsDataStructures
         public string [] slots;
         public T [] values;
 
+        private int step;
+
         public NativeDictionary(int sz)
         {
             size = sz;
             slots = new string[size];
+            for(int i=0; i<size; i++)
+                slots[i] = null;
             values = new T[size];
+            step %= size;
         }
 
         public int HashFun(string key)
         {
-            // всегда возвращает корректный индекс слота
-            return 0;
+            return Math.Abs(key.GetHashCode()) % size;
         }
 
         public bool IsKey(string key)
         {
-            // возвращает true если ключ имеется,
-            // иначе false
-            return false;
+            return FindKeyIndex(key) >= 0;
         }
 
         public void Put(string key, T value)
         {
-            // гарантированно записываем 
-            // значение value по ключу key
+            var putIndex = SeekSlot(key);
+            if(putIndex == -1)
+                throw new IndexOutOfRangeException("Dictionary overflow");
+            values[putIndex] = value;
+            slots[putIndex] = key;
         }
 
         public T Get(string key)
         {
             // возвращает value для key, 
             // или null если ключ не найден
-            return default(T);
+            var index = FindKeyIndex(key);
+            if(index < 0)
+                return default(T);
+            return values[index];
+        }
+        
+        private int SeekSlot(string value)
+        {
+            // находит индекс пустого слота для значения, или -1
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (slots[curIndex] == null || slots[curIndex] == value)
+                    return curIndex;
+
+                curIndex += step;
+                curIndex %= size;
+
+            } while (curIndex != hashVal);
+            
+            return -1;
+        }
+        
+        private int FindKeyIndex(string Key)
+        {
+            var hashVal = HashFun(Key);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (slots[curIndex] == Key)
+                    return curIndex;
+                
+                if (slots[curIndex] == null)
+                    return -1;
+
+                curIndex += step;
+                curIndex %= size;
+
+            } while (curIndex != hashVal);
+            
+            return -1;
         }
     } 
 }
