@@ -19,7 +19,7 @@ namespace AlgorithmsDataStructures
             for(int i=0; i<size; i++)
                 slots[i] = null;
             values = new T[size];
-            step %= size;
+            step =  3 % size;
         }
 
         public int HashFun(string key)
@@ -43,8 +43,6 @@ namespace AlgorithmsDataStructures
 
         public T Get(string key)
         {
-            // возвращает value для key, 
-            // или null если ключ не найден
             var index = FindKeyIndex(key);
             if(index < 0)
                 return default(T);
