@@ -24,9 +24,10 @@ namespace AlgorithmsDataStructures
         public int Size()
         {
             int counter = 0;
-            for (int i = 0; i < _values.Length; i++)
+            foreach (var valExists in _isHaveValue)
             {
-                counter += 1;
+                if (valExists)
+                    counter++;
             }
             return counter;
         }
@@ -41,70 +42,108 @@ namespace AlgorithmsDataStructures
             _values[putIndex] = value;
         }
 
+        
         public bool Get(T value)
         {
-            var hashVal = HashFun(value);
-            var curIndex = hashVal;
-
-            do
-            {
-                if (_values[curIndex].Equals(value))
-                    return true;
-
-                curIndex += HASH_STEP;
-                curIndex %= SET_SIZE;
-
-            } while (curIndex != hashVal);
-            
-            return false;
+            return FindValueIndex(value) != -1;
         }
 
         public bool Remove(T value)
         {
+            var valIndex = FindValueIndex(value);
+
+            if (valIndex == -1)
+                return false;
+            
+            _isHaveValue[valIndex] = false;
+            _values[valIndex] = default(T);
+            return true;
+        }
+
+        private int FindValueIndex(T value)
+        {
             var hashVal = HashFun(value);
             var curIndex = hashVal;
 
             do
             {
                 if (_values[curIndex].Equals(value))
-                {
-                    _isHaveValue[curIndex] = false;
-                    _values[curIndex] = default(T);
-                    return true;
-                }
-                    
+                    return curIndex;
+
                 curIndex += HASH_STEP;
                 curIndex %= SET_SIZE;
 
             } while (curIndex != hashVal);
             
-            return false;
+            return -1;
         }
 
         public PowerSet<T> Intersection(PowerSet<T> set2)
-        {
-            // пересечение текущего множества и set2
-            return null;
+        { 
+            var intersection = new PowerSet<T>();
+            foreach (var val in set2.ToArray())
+            {
+                if(this.Get(val))
+                    intersection.Put(val);
+            }
+            return intersection;
         }
 
         public PowerSet<T> Union(PowerSet<T> set2)
         {
-            // объединение текущего множества и set2
-            return null;
+            var union = new PowerSet<T>();
+            
+            foreach (var val in set2.ToArray())
+            {
+                union.Put(val);
+            }
+            
+            foreach (var val in this.ToArray())
+            {
+                union.Put(val);
+            }
+            
+            return union;
         }
 
         public PowerSet<T> Difference(PowerSet<T> set2)
         {
-            // разница текущего множества и set2
-            return null;
+            var union = this.Union(set2);
+            
+            foreach (var val in this.Intersection(set2).ToArray())
+            {
+                union.Remove(val);
+            }
+
+            return union;
         }
 
         public bool IsSubset(PowerSet<T> set2)
         {
-            // возвращает true, если set2 есть
-            // подмножество текущего множества,
-            // иначе false
-            return false;
+            var subSet = set2.ToArray();
+
+            foreach (var element in subSet)
+            {
+                if (!this.Get(element))
+                    return false;
+            }
+            
+            return true;
+        }
+
+        public T[] ToArray()
+        {
+            var result = new T[Size()];
+            for (int i = 0, j = 0; i < _isHaveValue.Length; i++)
+            {
+                if (_isHaveValue[i])
+                {
+                    result[j] = _values[i];
+                    j++;
+                }
+            }
+
+            return result;
         }
         
         private int HashFun(T value)
@@ -112,7 +151,7 @@ namespace AlgorithmsDataStructures
             return Math.Abs(value.GetHashCode()) % SET_SIZE;
         }
 
-        public int SeekSlot(T value)
+        private int SeekSlot(T value)
         {
             var hashVal = HashFun(value);
             var curIndex = hashVal;
@@ -128,6 +167,18 @@ namespace AlgorithmsDataStructures
             } while (curIndex != hashVal);
             
             return -1;
+        }
+
+        public override string ToString()
+        {
+            var result = "";
+            foreach (var value in _values)
+            {
+                result += value;
+                result += " ";
+            }
+
+            return result.TrimEnd(' ');
         }
     }
 }
