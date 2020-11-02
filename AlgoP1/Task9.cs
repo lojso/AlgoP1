@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 // https://skillsmart.ru/algo/15-121-cm/d318f1aeed.html
-namespace AlgorithmsDataStructures
+namespace Task9
 {
     public class NativeDictionary<T>
     {
