@@ -9,34 +9,75 @@ namespace AlgorithmsDataStructures
     // или расширьте его методами из HashTable
     public class PowerSet<T>
     {
+        private const int SET_SIZE = 20000;
+        private const int HASH_STEP = 7;
+
+        private T[] _values;
+        private bool[] _isHaveValue;
 
         public PowerSet()
         {
-            // ваша реализация хранилища
+            _values = new T[SET_SIZE];
+            _isHaveValue = new bool[SET_SIZE];
         }
 
         public int Size()
         {
-            // количество элементов в множестве
-            return 0;
+            int counter = 0;
+            for (int i = 0; i < _values.Length; i++)
+            {
+                counter += 1;
+            }
+            return counter;
         }
 
         public void Put(T value)
         {
-            // всегда срабатывает
+            var putIndex = SeekSlot(value);
+            if(putIndex == -1)
+                throw new OutOfMemoryException("Превышен размер множества");
+
+            _isHaveValue[putIndex] = true;
+            _values[putIndex] = value;
         }
 
         public bool Get(T value)
         {
-            // возвращает true если value имеется в множестве,
-            // иначе false
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (_values[curIndex].Equals(value))
+                    return true;
+
+                curIndex += HASH_STEP;
+                curIndex %= SET_SIZE;
+
+            } while (curIndex != hashVal);
+            
             return false;
         }
 
         public bool Remove(T value)
         {
-            // возвращает true если value удалено
-            // иначе false
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (_values[curIndex].Equals(value))
+                {
+                    _isHaveValue[curIndex] = false;
+                    _values[curIndex] = default(T);
+                    return true;
+                }
+                    
+                curIndex += HASH_STEP;
+                curIndex %= SET_SIZE;
+
+            } while (curIndex != hashVal);
+            
             return false;
         }
 
@@ -64,6 +105,29 @@ namespace AlgorithmsDataStructures
             // подмножество текущего множества,
             // иначе false
             return false;
+        }
+        
+        private int HashFun(T value)
+        {
+            return Math.Abs(value.GetHashCode()) % SET_SIZE;
+        }
+
+        public int SeekSlot(T value)
+        {
+            var hashVal = HashFun(value);
+            var curIndex = hashVal;
+
+            do
+            {
+                if (_isHaveValue[curIndex] == false || _values[curIndex].Equals(value))
+                    return curIndex;
+
+                curIndex += HASH_STEP;
+                curIndex %= SET_SIZE;
+
+            } while (curIndex != hashVal);
+            
+            return -1;
         }
     }
 }
