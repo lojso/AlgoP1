@@ -67,7 +67,7 @@ namespace AlgorithmsDataStructures
 
             do
             {
-                if (_values[curIndex].Equals(value))
+                if (_isHaveValue[curIndex] && _values[curIndex].Equals(value))
                     return curIndex;
 
                 curIndex += HASH_STEP;

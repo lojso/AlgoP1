@@ -21,6 +21,16 @@ namespace Tests
         }
         
         [Test]
+        public void GetFromEmpty()
+        {
+            PowerSet<int> set = new PowerSet<int>();
+
+            Assert.True(set.Get(1) == false);
+            Assert.True(set.Get(0) == false);
+        }
+
+        
+        [Test]
         public void RemoveTest()
         {
             PowerSet<int> set = new PowerSet<int>();
