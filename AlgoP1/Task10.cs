@@ -108,14 +108,14 @@ namespace AlgorithmsDataStructures
 
         public PowerSet<T> Difference(PowerSet<T> set2)
         {
-            var union = this.Union(set2);
+            var resultSet = this.Union(new PowerSet<T>());
             
             foreach (var val in this.Intersection(set2).ToArray())
             {
-                union.Remove(val);
+                resultSet.Remove(val);
             }
 
-            return union;
+            return resultSet;
         }
 
         public bool IsSubset(PowerSet<T> set2)

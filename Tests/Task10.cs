@@ -216,7 +216,7 @@ namespace Tests
 
             var union = s1.Difference(s2);
             
-            Assert.True(union.Size() == 2);
+            Assert.True(union.Size() == 1);
         }
         
         [Test]
@@ -233,7 +233,7 @@ namespace Tests
 
             var union = s1.Difference(s2);
             
-            Assert.True(union.Size() == 4);
+            Assert.True(union.Size() == 2);
         }
         
         [Test]
@@ -254,6 +254,25 @@ namespace Tests
             
             Assert.True(union.Size() == 2);
         }
+
+                
+        [Test]
+        public void DifferenceSame()
+        {
+            var s1 = new PowerSet<int>();
+            var s2 = new PowerSet<int>();
+            
+            s1.Put(2);
+            s1.Put(3);
+
+            s2.Put(2);
+            s2.Put(3);
+
+            var union = s1.Difference(s2);
+            
+            Assert.True(union.Size() == 0);
+        }
+
         
         [Test]
         public void IsSubset()
