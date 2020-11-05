@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using AlgorithmsDataStructures;
+using Task10;
 using NUnit.Framework;
 
 namespace Tests

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 
 // https://skillsmart.ru/algo/15-121-cm/c9b6abc9e1.html
-namespace AlgorithmsDataStructures
+namespace Task10
 {
-
     // наследуйте этот класс от HashTable
     // или расширьте его методами из HashTable
     public class PowerSet<T>
