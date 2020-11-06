@@ -26,41 +26,30 @@ namespace AlgorithmsDataStructures
 
         private int Hash(string val, int randomVal)
         {
-            const int m = 1000000000 + 9;
             int hash_value = 0;
-            int p_pow = 1;
-            
+
             for(int i=0; i < val.Length; i++)
             {
-                hash_value = (hash_value + (val[i] + 1) * p_pow) % m;
-                p_pow = (p_pow * randomVal) % m;
+                int code = (int)val[i];
+                hash_value = (hash_value * randomVal + code) % filter_len;
             }
             
-            return hash_value % filter_len;
+            return hash_value;
         }
 
         public void Add(string str1)
         {
-            var boolVal1 = ConvertToBool(Hash1(str1));
-            var boolVal2 = ConvertToBool(Hash2(str1));
-            for (int i = 0; i < filter_len; i++)
-            {
-                _mask[i] = _mask[i] || boolVal1[i] || boolVal2[i];
-            }
+            _mask[Hash1(str1)] = true;
+            _mask[Hash2(str1)] = true;
         }
 
         public bool IsValue(string str1)
         {
-            var boolVal1 = ConvertToBool(Hash1(str1));
-            var boolVal2 = ConvertToBool(Hash2(str1));
-            for (int i = 0; i < filter_len; i++)
-            {
-                if (boolVal1[i] == true && _mask[i] != true)
-                    return false;
-                
-                if (boolVal2[i] == true && _mask[i] != true)
-                    return false;
-            }
+            if (_mask[Hash1(str1)] != true)
+                return false;
+
+            if (_mask[Hash2(str1)] != true)
+                return false;
             
             return true;
         }
