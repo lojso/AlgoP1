@@ -7,12 +7,12 @@ namespace AlgorithmsDataStructures
     public class BloomFilter
     {
         public int filter_len;
-        private bool[] _mask;
+        private Int32 _intMask;
 
         public BloomFilter(int f_len)
         {
             filter_len = f_len;
-            _mask = new bool[filter_len];
+            _intMask = 0;
         }
         
         public int Hash1(string str1)
@@ -39,18 +39,28 @@ namespace AlgorithmsDataStructures
 
         public void Add(string str1)
         {
-            _mask[Hash1(str1)] = true;
-            _mask[Hash2(str1)] = true;
+            _intMask = SetRegister(_intMask, Hash1(str1));
+            _intMask = SetRegister(_intMask, Hash2(str1));
+        }
+
+        public Int32 SetRegister(Int32 num, int index)
+        {
+            return (1 << index) | num;
+        }
+        
+        public bool GetRegister(Int32 num, int index)
+        {
+            return (num & (1 << index)) != 0;;
         }
 
         public bool IsValue(string str1)
         {
-            if (_mask[Hash1(str1)] != true)
-                return false;
-
-            if (_mask[Hash2(str1)] != true)
+            if (GetRegister(_intMask, Hash1(str1)) != true)
                 return false;
             
+            if (GetRegister(_intMask, Hash2(str1)) != true)
+                return false;
+
             return true;
         }
 
