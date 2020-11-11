@@ -2,7 +2,8 @@
 using System;
 using System.IO;
 
-namespace AlgorithmsDataStructures
+//https://skillsmart.ru/algo/15-121-cm/z0b3da83s2.html
+namespace Task11
 {
     public class BloomFilter
     {
