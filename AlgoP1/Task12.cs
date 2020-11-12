@@ -1,5 +1,6 @@
 ﻿using System;
 
+// https://skillsmart.ru/algo/15-121-cm/f1ed710084.html
 namespace AlgoP1
 {
     public class NativeCache<T>
