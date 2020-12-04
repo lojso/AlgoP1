@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// https://skillsmart.ru/algo/15-121-cm/d5a98a594d.html
 namespace Task7
 {
     public class Node<T>

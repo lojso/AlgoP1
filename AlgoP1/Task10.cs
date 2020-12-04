@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// https://skillsmart.ru/algo/15-121-cm/c9b6abc9e1.html
 namespace Task10
 {
     // наследуйте этот класс от HashTable

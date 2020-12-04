@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// https://skillsmart.ru/algo/15-121-cm/e192yed1ab.html
 namespace Task6
 {
     public class Stack<T>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//https://skillsmart.ru/algo/15-121-cm/c49a935fa9.html
 namespace Task6
 {
     public class DynArray<T>

@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
-using System.IO;
+﻿using System;
 
-//https://skillsmart.ru/algo/15-121-cm/z0b3da83s2.html
 namespace Task11
 {
     public class BloomFilter

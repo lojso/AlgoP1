@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//    https://skillsmart.ru/algo/15-121-cm/c5f6d68jj7.html
 namespace Task8
 {
 

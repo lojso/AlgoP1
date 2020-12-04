@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-    
-// https://skillsmart.ru/algo/15-121-cm/b54ra0da92.html
+
 namespace Task5
 {
     public class Queue<T>
